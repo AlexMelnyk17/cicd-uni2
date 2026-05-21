@@ -23,4 +23,11 @@ class RecipeViewsTestCase(TestCase):
         
         self.assertEqual(len(response.context['recipes']), 5)
 
-    
+    def test_category_list_view_status_and_count(self):
+        response = self.client.get(reverse('category_list'))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'category_list.html')
+        
+        first_category = response.context['categories'].first()
+        self.assertEqual(first_category.recipe_count, 6)
