@@ -15,4 +15,12 @@ class RecipeViewsTestCase(TestCase):
                 category=self.category
             )
 
-   
+    def test_main_view_status_and_limit(self):
+        response = self.client.get(reverse('main'))
+        self.assertEqual(response.status_code, 200)
+        
+        self.assertTemplateUsed(response, 'main.html')
+        
+        self.assertEqual(len(response.context['recipes']), 5)
+
+    
